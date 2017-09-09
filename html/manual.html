@@ -1,0 +1,669 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NESSY - NMR Relaxation Dispersion Spectroscopy analysis software</title>
+<link rel="SHORTCUT ICON" href="favicon.ico">
+<style type="text/css">
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+}
+a:link {
+	color: #000;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: none;
+	color: #666;
+}
+a:active {
+	text-decoration: none;
+	color: #000;
+}
+body {
+	background-color: #EAEAEA;
+}
+.white {
+	color: #FFF;
+}
+#small {
+	font-size: small;
+}
+.Lists {
+	text-align: left;
+}
+#list_no_bg {
+}
+.list_no_bg {
+	text-align: left;
+}
+#list_no_bg .Lists {
+	color: #FFF;
+}
+.bg_white_list {
+	color: #FFF;
+}
+.normal {
+	color: #000;
+}
+.balck {
+	color: #000;
+}
+.style1 {
+	font-size: large;
+	font-weight: bold;
+}
+.style15 {font-family: "Courier New", Courier, monospace; font-size: small; }
+</style>
+</head>
+
+<body>
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF">
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF"><table width="900" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="120" rowspan="3"><a href="index.html"><img src="pics/NESSY.png" alt="NESSY" width="100" height="85" border="0" /></a></td>
+        <td width="660" align="center" valign="top"><h2><strong>NESSY</strong></h2></td>
+        <td width="120" rowspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top"><p><strong>N</strong>MR R<strong>e</strong>laxation Di<strong>s</strong>persion <strong>S</strong>pectroscop<strong>y</strong> Analysis Software for Windows, Mac and Linux</p></td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF"><img src="pics/NESSY_banner.png" width="900" height="293" /></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF"><h3>Manual</h3>
+      <p>Functions are grouped according to the menu entries:</p>
+      <p>&nbsp;</p>
+      <table width="900" border="0" align="center" cellpadding="0" cellspacing="10">
+        <tr>
+          <td width="208" height="23" align="left" valign="top" class="white" style="font-size: large"><p align="left" class="balck"><strong>Menu</strong></p></td>
+          <td width="662" height="23" align="left" valign="top" class="white" style="font-size: large"><div align="justify"><span class="balck"><strong>Description of function</strong></span></div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><p align="left"><strong>File:</strong></p></td>
+          <td align="left" valign="top"><div align="justify"></div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">New</div></td>
+          <td align="left" valign="top"><div align="justify">Empties all settings an variables to start a new NESSY project.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Open</div></td>
+          <td align="left" valign="top"><div align="justify">Opens a saved NESSY project.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Save</div></td>
+          <td align="left" valign="top"><div align="justify">Saves a NESSY project.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Save as</div></td>
+          <td align="left" valign="top"><div align="justify">Saves a NESSY project under new name.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Opened Projects </td>
+          <td align="left" valign="top">List of NESSY projects that were loaded previously. </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Quit</div></td>
+          <td align="left" valign="top"><div align="justify">Closes NESSY. Note that running calculations will be aborted.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">
+            <p>&nbsp;</p>
+            </div></td>
+          <td align="left" valign="top"><div align="justify">
+            <p>&nbsp;</p>
+            </div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left"><strong>Import:</strong></div></td>
+          <td align="left" valign="top"><div align="justify">
+            <p>&nbsp;</p>
+            </div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Load Structure File</div></td>
+          <td align="left" valign="top"><p align="justify">Reads the sequence of a PDB file. Numbering will be identical to numbering of PDB structure. </p>
+          <p align="justify">It is recommended to read in the sequence from a PDB file, as it is the most convenient way to have it synchronized with you data and results. Note that only colour and width coded strcutures can be viewed if a PDB file was selected/imported.</p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Load FASTA sequence </td>
+          <td align="left" valign="top"><p>Opens up a dialog to add protein sequence in FASTA format.</p>
+          <p align="center"><img src="pics/Manual/FASTA.png" width="500" height="248" /> </p>
+          <p align="justify">The suequence can be retreived from the internet by indicating UniProtKB/Swiss-Prot code (<u><a href="http://www.expasy.ch" target="_blank">www.expasy.ch</a></u>) or by writing/pasting it in the panel. If the sequence is not starting with residue no. 1 of the curent project, this can be set.</p>
+          <p align="justify">By pushing the clear button, the loaded sequence will be deleted from the  Data tab. </p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Import Data from Single File</div></td>
+          <td align="left" valign="top"><p align="justify">Use this function to import a peak list to you NESSY session. First, you have to load the peak list (Datafile). Then you can specify in which data set row the data should be imported. NESSY is able to import (almost) all peak lists. Therefore, the column number of the assignment (column where residue number is) and the intensity has to be specified. Note that numbering starts with the first real entry. Finally, you can choose between different peak file formats. Sparky, Xeasy and NMR View peak file formats can be selected. In addition, you have the oppurtunity to indicate whether your peak list is a space/tabulator or semicolon separated text file.</p>
+            <p align="justify">Example (Sparky peak list):</p>
+            <div align="justify">
+              <blockquote>
+                <table cellspacing="0" cellpadding="0">
+                  <col width="80" span="8" />
+                  <tr>
+                    <td width="33" bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td width="92" bgcolor="#CCCCCC" class="Lists" style="font-size: small">Assignment</td>
+                    <td width="74" bgcolor="#CCCCCC" class="Lists" style="font-size: small">w1</td>
+                    <td width="63" bgcolor="#CCCCCC" class="Lists" style="font-size: small">w2</td>
+                    <td width="86" bgcolor="#CCCCCC" class="Lists" style="font-size: small">Data</td>
+                    <td width="90" style="font-size: small"></td>
+                    <td width="15" style="font-size: small"></td>
+                    <td width="74" style="font-size: small">Sequence</td>
+                    <td width="57" style="font-size: small">Data 1</td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td style="font-size: small"></td>
+                    <td colspan="2" style="font-size: small"></td>
+                    <td style="font-size: small"></td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small">&nbsp;</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">&nbsp;</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">&nbsp;</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">&nbsp;</td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small"></td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small">D3N-H</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">122.284</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">8.519</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">6268538</td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small">3</td>
+                    <td style="font-size: small">Asp</td>
+                    <td align="right" class="Lists" style="font-size: small">6268538</td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small">C4N-H</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">116.715</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">7.968</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">98160120</td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small">4</td>
+                    <td style="font-size: small">Cys</td>
+                    <td align="right" class="Lists" style="font-size: small">98160120</td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small">I5N-H</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">124.403</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">8.893</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">39739664</td>
+                    <td style="font-size: small; text-align: center; font-weight: bold;">==&gt;</td>
+                    <td style="font-size: small">5</td>
+                    <td style="font-size: small">Ile</td>
+                    <td align="right" class="Lists" style="font-size: small">39739664</td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small">K7N-H</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">116.092</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">7.58</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">39971648</td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small">7</td>
+                    <td style="font-size: small">Lys</td>
+                    <td align="right" class="Lists" style="font-size: small">39971648</td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small">W8N-H</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">115.785</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">9.255</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">7588816</td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small">8</td>
+                    <td style="font-size: small">Trp</td>
+                    <td align="right" class="Lists" style="font-size: small">7588816</td>
+                  </tr>
+                  <tr>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small"></td>
+                    <td bgcolor="#CCCCCC" class="Lists" style="font-size: small">K9N-H</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">119.422</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">7.735</td>
+                    <td align="right" bgcolor="#CCCCCC" class="Lists" style="font-size: small">20583350</td>
+                    <td style="font-size: small"></td>
+                    <td style="font-size: small">9</td>
+                    <td style="font-size: small">Lys</td>
+                    <td align="right" class="Lists" style="font-size: small">20583350</td>
+                  </tr>
+                  <tr class="bg_white_list" id="list_no_bg">
+                    <td style="color: #000"></td>
+                    <td align="center" class="bg_white_list" style="font-size: small"><span class="normal"><em>1</em></span></td>
+                    <td align="center" class="bg_white_list" style="font-size: small"><span class="normal"><em>2</em></span></td>
+                    <td align="center" class="bg_white_list" style="font-size: small"><span class="normal"><em>3</em></span></td>
+                    <td align="center" class="bg_white_list" style="font-size: small"><span class="normal"><em>4</em></span></td>
+                    <td align="right" class="Lists" style="color: #FFFFF">&nbsp;</td>
+                    <td style="color: #FFFFF"></td>
+                    <td style="color: #FFFFF"></td>
+                    <td align="right" class="Lists" style="color: #FFFFF">&nbsp;</td>
+                  </tr>
+                  <tr class="bg_white_list">
+                    <td style="color: #000"></td>
+                    <td colspan="4" align="center" class="bg_white_list" style="font-size: small; color: #000; font-style: italic;">Column Numbering</td>
+                    <td align="right" class="Lists" style="color: #FFFFF">&nbsp;</td>
+                    <td style="color: #FFFFF"></td>
+                    <td style="color: #FFFFF"></td>
+                    <td align="right" class="Lists" style="color: #FFFFF">&nbsp;</td>
+                  </tr>
+                </table>
+              </blockquote>
+          </div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Import Data from Multiple Files</div></td>
+          <td align="left" valign="top"><div align="justify">Use this function to import mutiple peak lists at once with the same format. Set up is similar than Import Data from Single File, except you can select multiple files and you specify the dataset from where the data will be appended.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Import VD List</div></td>
+          <td align="left" valign="top"><div align="justify">This function allows you to import the vd list of your (Bruker) CPMG experiment. CPMG frequencies are listed in the vd list and will be imported directly in you NESSY session.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Import BRUKER Protein Dynamic Center Project </td>
+          <td align="left" valign="top"><p>This function is used to import projects started with BRUKER's Protein Dynamics Center (PDC).</p>
+          <p align="center"><img src="pics/Manual/PDC.png" width="400" height="160" /></p>
+          <p>Use PDC to export the project as text file (see PDC manual) and select this file in the dialog shown above. If you are using multiple experiments (for global fit), you can specify in which project the data has to be loaded. </p>          </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Import NMR View Table </td>
+          <td align="left" valign="top"><p>This function can be used to import table craeted using NMR View in the relaxation panel (Fit table):</p>
+            <blockquote>
+              <table width="665" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="52" bgcolor="#CCCCCC"><span class="style15">Peak</span></td>
+                  <td width="32" bgcolor="#CCCCCC"><span class="style15">N</span></td>
+                  <td width="55" bgcolor="#CCCCCC"><span class="style15">T1</span></td>
+                  <td width="63" bgcolor="#CCCCCC"><span class="style15">T5</span></td>
+                  <td width="38" bgcolor="#CCCCCC"><span class="style15">...</span></td>
+                  <td width="78" bgcolor="#CCCCCC"><span class="style15">Residue</span></td>
+                  <td width="58" bgcolor="#CCCCCC"><span class="style15">a</span></td>
+                  <td width="73" bgcolor="#CCCCCC"><span class="style15">asigma</span></td>
+                  <td width="61" bgcolor="#CCCCCC"><span class="style15">b</span></td>
+                  <td width="73" bgcolor="#CCCCCC"><span class="style15">bsigma</span></td>
+                  <td width="82" bgcolor="#CCCCCC"><span class="style15">rmsd</span></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#CCCCCC"><span class="style15">1</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">17</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">0.671</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">0.47154</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">...</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">1</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">0.053</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">0.0012</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">6.4E-4</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">6.0E-5</span></td>
+                  <td bgcolor="#CCCCCC"><span class="style15">0.0167</span></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#CCCCCC">...</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                  <td bgcolor="#CCCCCC">&nbsp;</td>
+                </tr>
+              </table>
+            </blockquote>
+          <p>Users can select if intensities are assigned to peak or residue number.</p>
+          <p align="center"><img src="pics/Manual/NMRView_import.png" width="263" height="179" /> </p>
+          <p align="justify">NESSY will read and assing data automatically to either the peak numbering or the residue numberinto the data grid. If assign to peak is selected,color-coded PyMol marcos will not map results corrected onto the structure. </p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left"></div></td>
+          <td align="left" valign="top"><div align="justify"></div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><strong>Data:</strong></td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Correction of Residue Numbering</div></td>
+          <td align="left" valign="top"><div align="justify">Shifts your sequence up or downwards.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Correction of Data Assignment</div></td>
+          <td align="left" valign="top"><div align="justify">Shifts you data up or downwards.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Erase Data Set</div></td>
+          <td align="left" valign="top"><div align="justify">Function to delete single data sets.</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">&nbsp;</td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left"><strong>Settings:</strong></div></td>
+          <td align="left" valign="top"><div align="justify"></div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Select residues to include in calculation </td>
+          <td align="left" valign="top"><p>Opens a dialog where users can select/deselect residues, which are included in further analysis.</p>
+          <p align="center"><img src="pics/Manual/sel_res.png" width="300" height="224" /> </p>
+          <p>Residues previously loaded into the project (by FASTA or pdb) can be selected. Entire protein, only few or single residues can be selected. </p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Select Models </td>
+          <td align="left" valign="top"><p>opens a dialog to enable/disable individual models.</p>
+          <p align="center"><img src="pics/Manual/models.png" width="300" height="211" /> </p>
+          <p>By default, modles 1 - 3 are active. Each model, except of model 1, can be switched off or on. If multiple experiments are set up, data can be globally fit. To do so, Global Fit model has to be activated. Now, data is only globally fitted to selected models. If multiple experiments are set up, but Global Fit is not activated, experiments are individually fitted.</p>
+          <p>Note: Selection of models is saved in NESSY projects, but Global Fit has to be activated after leading the experiments!  </p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Boundaries / Initial Guess </td>
+          <td align="left" valign="top">In this dialog, boundaries of the parameters used during curve fitting and grid search are set. In addition, initial guess / parameters can be specified. This initial parameters are only used if grid search is disabled (see below). </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">NESSY Settings</div></td>
+          <td align="left" valign="top"><p align="justify">You can set properties for you data analysis:</p>
+            <p align="center"><img src="pics/Manual/settings.png" width="400" height="345" /></p>
+            <ul>
+              <li>Model Selection (Default is AICc):              </li>
+            </ul>
+            <div align="justify">
+              <ul>
+              <ul>
+                <li>Akaike Information criteria with a second order for small sample size (AICc)</li>
+                <li>Akaike Information criteria (AIC)</li>
+                <li>F-Test</li>
+                <li>Chi2</li>
+                <li>Manual selection (use Manual Model Selection tool found in Settings to chose models) </li>
+              </ul>
+            </ul>
+          </div>
+            <ul>
+              <li>Number of Monte Carlo Simulations (default is 500)</li>
+            </ul>
+            <ul>
+              <li>Increments for Grid Search.              </li>
+              
+              <blockquote>
+                <p>Here you can specify the increment size of the grid search, which is used for parameter estimation. Grid search is performed between boundaries set in 'Setting &gt; Boundaries / Initial Guess'. </p>
+              </blockquote>
+              <li>Minimisation Method.
+                <blockquote>
+                  <p>By default, NESSY uses grid search for estimation of parameters (models 2, 3 and 6). Grid search can be disabled by chosing 'Least square only'. </p>
+                </blockquote>
+              </li>
+            
+              <li>Minimal difference between R2eff between lowest or highest CPMG frequency in Hz.              </li>
+            </ul>
+            <ul>
+              <blockquote>
+                <p>This setting can be used to predict chemical exchange and to speed up calculation. Default difference is 2 Hz. To disable exclution criteria, just enter '0' or 'None' into the text box. </p>
+              </blockquote>
+              <li>Calculate models 2-5 lets users choose if selected models are calculated for each residue ( 'for entire dataset') or only is chemical exchange is expected ('only if exchange is expected').</li>
+            </ul>
+            <ul>
+              <li>Range of Y axis for R2eff plots (including fits) </li>
+            </ul>
+            <ul>
+              <li>Widh of frame for generated plots </li>
+            </ul>
+            <ul>
+              <li>Type of vector graphics (plots), which are generated during calculation. Supported formats are: SVG, PS, EPS, PDF (default is SVG) </li>
+            </ul>
+            <ul>
+              <li>Create Intensity plots for each residue</li>
+            </ul>
+            <ul>
+              <li>Craete R2eff plot for each residue  </li>
+            </ul>
+            <div align="justify"></div>          <p align="justify">NESSY uses AICc model selection as default, as normal distribution of data can not be assumed (as necessary for F-Tests). Nevertheless, settings can be changed and defaults can be resored at any time of and during your calculation. Note that if you change settings during the calculation, your data might not be uniformly analyzed.</p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">&nbsp;</td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><strong>n-States:</strong></td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Fast Exchange </td>
+          <td align="left" valign="top"><p>Opens up dialog to perform fit to 2-9 states models in fast exchange. </p>
+          <p align="center"><img src="pics/Manual/fast.png" width="350" height="257" /></p>
+          <p>Residues to analyze and limit for number of states can be specified. </p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Slow Exchange </div></td>
+          <td align="left" valign="top"><div align="justify">
+            <p>Opens up dialog to perform fit to 2-9 states models in slow exchange. </p>
+            <p align="center"><img src="pics/Manual/slow.png" width="350" height="198" /></p>
+            <p>Residues to analyze and limit for number of states can be specified. </p>
+          </div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">&nbsp;</td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left"><strong>Extras:</strong></div></td>
+          <td align="left" valign="top"><div align="justify"></div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">PEAKY</div></td>
+          <td align="left" valign="top"><div align="justify">Automatic peak picking and assignment tool (<span style="font-style: italic">not implemented yet !</span>).</div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Back calculate intensities</div></td>
+          <td align="left" valign="top"><p align="justify">Calculates and normalizes dispersion data of independent experiment to your session to implement additional data sets.</p>
+          <p align="justify">This function can be used for:</p>
+          <div align="justify">
+            <ul>
+              <li>Adding data points of independent perfomed experiments</li>
+              <li>Combine data recorded at different spectrometer frequencies</li>
+            </ul>
+          </div>
+          <p align="justify">The main function is to make a baseline correction of independent experiment so data can be fitted together to dispersion models. This functions generates artificial Sparky-formatted peak lists that can be imported into your current session.</p>
+          <p align="justify">NESSY calculates R2eff of your additional datasets and back calculates intensities (normalized according to reference spectra of your NESSY session). This allows to import and combine data of different experiments.</p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><div align="left">Create Synthetic data </div></td>
+          <td align="left" valign="top"><div align="justify">
+            <p>This function can be used to create synthetic data for models 2-5.</p>
+            <p align="center"><img src="pics/Manual/synthetic.png" width="450" height="170" /> </p>
+            <p>CPMG frequencies can be specified (separated by comma) as well as the constant time for the CPMG pulse train. Synthetic peak lists (in Sparky format) will be generated and saved in selected folder for specified model. The error, which will be introduced, can be set using the slider. </p>
+          </div></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Calculate free Energy dG </td>
+          <td align="left" valign="top"><p>Free energy can be calcuated out of relaxation dispersion experiments.</p>
+          <p align="center"><img src="pics/Manual/dG.png" width="300" height="222" /> </p>
+          <p>By inserting dynamics parameters calcuated by NESSY, free energy (dG) can be calculated. If model 2 (fast exchange) was selected, populations can be calcualted if dw (shift differences) are known (e.g. for binging experiments).</p>
+          <p>Calculated dG values can be directly passed to van't Hoff analysis (see below).</p>
+          <p><em>Formula:</em></p>
+          <p><img src="pics/Manual/dG_f.png" width="160" height="52" /></p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">van't Hoff Analysis </td>
+          <td align="left" valign="top"><p>If relaxation dispersion experiments are performed at different temperatures, van't Hoff analysis can be used to calculate Enthalpy and Entropy.</p>
+          <p align="center"><img src="pics/Manual/vanthoff.png" width="489" height="480" /></p>
+          <p>The linear and non-linear van't Hoff models are included for calculation. Either dG (free energy) can be added to data grid (manually or directly after calculation; see above) or K (= k(b-a) / k(a-b)) together with the temperature in Kelvin.</p>
+          <p>Data does not have to be obtained by NESSY calculation. This function can be used to perform van't Hoff analysis for different experiments. </p>
+          <p>&nbsp;</p>
+          <p>Values can be entered either manually directly in the data grid or read out of a text file. NESSY detects dG, T, kab and K, but it is mendatory to have these parameters in the header of the text file:</p>
+          <table width="400" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td>kab</td>
+              <td>K</td>
+              <td>T</td>
+              <td>dG</td>
+            </tr>
+            <tr>
+              <td>0.4</td>
+              <td>21.7</td>
+              <td>298.12</td>
+              <td>8654.34</td>
+            </tr>
+          </table>          
+          <p>in addition, data can be imported during NESSY startup using the command:</p>
+          <p>$ ./nessy --vanthoff [<em>name of text file</em>]</p>          </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Export/Save log </td>
+          <td align="left" valign="top">Execution protocol can be saved in a text file to track calculation. </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">&nbsp;</td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><strong>Plotting:</strong></td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Create 2D plot </td>
+          <td align="left" valign="top"><p>This function can be used to greate custom made 2D plots.</p>
+          <p align="center"><img src="pics/Manual/2d_plot.png" width="500" height="299" /></p>
+          <p>Either a NESSY csv file or any other text file (tabulator, space, comma or semicolon separated columns) can be loaded into dialog. For each data set, a figure legend can be indicated. In addition, users have the choice between6 different plot styles (including energy landscapes) and can select the color for the data set. The colomn number of x-, y- and error-values are specified per data set (column numbering starts with 1 for the first column; white space does not cound). Data can be edited using in built editor (Edit button). In addition, data can be manually entered using the editor. </p>
+          <p>In addition, labels of x and y axis as well as the range can be set. The dimenstions of x / y axis can be set by indicating the percentage of the y axis in relation to the x axis. The thickness of the plot box is set in NESSY settings. </p>
+          <p>A file root for the plots has to be given. Two files are created: a png file, which will be added to the results tab in the NESSY main windows, and a vector graphics plot (depending on the selection in NESSY settings).  </p>
+          <p><em>Note that NESSY plot generator can be used to plot data not obtained by NESSY. Any data in text files can be inserted (comma or semicolon separated data). Location of important data (x, y or error) can be selected. </em></p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Create 3D plot </td>
+          <td align="left" valign="top"><p>This function can be used to greate custom made 3D plots.</p>
+          <p align="center"><img src="pics/Manual/3d_plot.png" width="500" height="273" /></p>
+          <p>3D plot generator works identical as the 2D plot generator. NESSY or any other text file can be used as source. The only difference is that the 3rd dimension can be specified using the 'Plane no.' text field. Multiply data sets can have the same plane number. This is usefull to plot a scatter plot with data points and a linear plot, which is the regression, in the same plane. </p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Create Multiple Alignments of Plots </td>
+          <td align="left" valign="top"><p>This function can be used to craete a SVG graphic of multiple aligned plots.</p>
+          <p align="center"><img src="pics/Manual/align.png" width="400" height="173" /> </p>
+          <p>The number of columns can be selected. NESSY calculates the corresponding numbers of rows.</p>
+          <p>If a NESSY project is loaded or data was analyzed, plots created during analysis will be added to the list in the dialog shown above. Altenatively, SVG files can be drag&amp;dropped into the plots field.</p>
+          <p>A SVG garphics of the plots (or graphics selected) will be created.   </p>
+          <p align="left"><em>Note that plots are sorted by increasing residue number! </em></p>
+          <p align="center"><img src="pics/Manual/aligned_plots.png" width="500" height="281" /></p>
+          <p>This function is very usefull to generate an ensemble of individual fits foeach residue to present in supplementary materials. Time to generate the plot above was less than 1 minute! </p></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Create Color Coded Structures </td>
+          <td align="left" valign="top"><p>This function allows to generate custom color- and width coded structures (PyMol macros).</p>
+          <p align="center"><img src="pics/Manual/color_coder.png" width="406" height="437" /></p>
+          <p>Any values can be given and assigned to a residue number. A PDB structure file and an output file has to be selected. Values can be entered manually into the data grid or read out of a text file. Values in the files have to be grouped by residue number in first column and value in second column. Columns can be separated either by space, tabulator, comma or semicolon.</p>
+          <p>Different coding modes can be selected, too.</p>          </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">&nbsp;</td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><strong>Help:</strong></td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Manual</td>
+          <td align="left" valign="top">This manual will appear. </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Tutorial</td>
+          <td align="left" valign="top">Follow the totorial to learn how to use NESSY's basic functions. </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">GNU GPL License </td>
+          <td align="left" valign="top">Read the GPL license of NESSY. </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">NESSY mailing list </td>
+          <td align="left" valign="top">Join the NESSY mailing list on <u><a href="http://gna.org/mail/?group=nessy">http://gna.org/mail/?group=nessy</a></u></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Contact NESSY </td>
+          <td align="left" valign="top">Write an email to the NESSY mailing list (using default mail program). </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">Update</td>
+          <td align="left" valign="top">If you installed the SVN version of NESSY, you can synchronize NESSY with further developments. </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">&nbsp;</td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"><span class="style1">Startup commands: </span></td>
+          <td align="left" valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="left" valign="top"><p>NESSY can be started using different arguments:</p>
+            <blockquote>
+              <p>$ nessy [File] [Arguments] [Input file]</p>
+            </blockquote>
+            <p>File:	NESSY project file to open upon start up.</p>
+            <p><em>Arguments:            </em></p>            </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">-h</td>
+          <td align="left" valign="top">Displaying help text.</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">-p</td>
+          <td align="left" valign="top">Prints out original publication.</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">--vanthoff</td>
+          <td align="left" valign="top">Input for van't Hoff analysis (dG or K) are read 
+from the Input file (add header 'T' for temperatur,<br />
+'K' for K (kba/kab), 'dG' for dG or kab for k(AB), 
+separated by whitespace).</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">--debug</td>
+          <td align="left" valign="top">Start NESSY in debugging mode (no error redirection,<br />
+skipping data evaluation).</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">--noredir</td>
+          <td align="left" valign="top">Error message is not redirected to error dialog.</td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">--plot</td>
+          <td align="left" valign="top">Loads plots of list file (containing list of svg 
+filenames) and opens dialog to craete multiple 
+plot alignment.</td>
+        </tr>
+      </table>
+      <p>For further questions or support please suscribe at our <u><a href="mailinglist.html">mailing list</a></u>.</p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" bgcolor="#CCCCCC">(C) Michael Bieri 2010</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

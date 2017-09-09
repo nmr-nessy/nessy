@@ -1,0 +1,1 @@
+python nessy $1

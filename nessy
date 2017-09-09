@@ -1,0 +1,873 @@
+#! /usr/bin/env python
+
+#################################################################################
+#                                                                               #
+#   (C) 2010-2011 Michael Bieri                                                 #
+#                                                                               #
+#   This file is part of NESSY.                                                 #
+#                                                                               #
+#   NESSY is free software: you can redistribute it and/or modify               #
+#   it under the terms of the GNU General Public License as published by        #
+#   the Free Software Foundation, either version 3 of the License, or           #
+#   (at your option) any later version.                                         #
+#                                                                               #
+#   NESSY is distributed in the hope that it will be useful,                    #
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of              #
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               #
+#   GNU General Public License for more details.                                #
+#                                                                               #
+#   You should have received a copy of the GNU General Public License           #
+#   along with NESSY; if not, write to the Free Software                        #
+#   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   #
+#                                                                               #
+#################################################################################
+
+
+# dependency check
+from dep_check import Dep_check, version_check
+Dep_check()
+
+# Python modules
+import matplotlib
+import wx
+import wx.grid
+import wx.lib.agw.pyprogress as PP
+from shutil import rmtree
+try:
+    import thread as _thread
+except ImportError:
+    import _thread
+import threading
+from os import getcwd, getenv, listdir, makedirs, sep, system
+import time
+import webbrowser
+
+# NESSY installation path
+import __main__
+import sys
+__main__.install_path = sys.path[0]
+
+# configuration
+import conf
+from conf.cpmg import Setup_experiment
+from conf.hd_exchange import Setup_HD
+from conf.message import message, question, error_popup
+from conf.evaluation import checkinput
+from conf.filedialog import openfile, opendir, savefile
+from conf.about import info_nessy
+from conf.project import save_project, refresh_project, open_project, stringtolist
+from conf.importdata import Bruker_project, pdb_to_sequence, vd_import, import_data, Erase_dataset, NMRView_project_import
+from conf.path import *
+from conf.settings import VERSION
+from conf.nessy_settings import settings
+from conf.fasta_import import Import_FASTA
+from conf.select_models import Select_models
+from conf.select_residues import Select_residues
+from conf.cluster import Cluster_residues
+from conf.constraints import Constraints
+from conf.shift_diff import Shift_difference
+from elements.redirect import NESSY_error
+
+# math
+import func
+from func.calc import Run_dispersion_calc
+from func.n_state_model import N_state_model
+from curvefit.hd_exchange import Calculate_HD
+
+# elements
+from elements.settings import build_settings
+from elements.collect_data import build_collect_data
+from elements.start_analysis import build_start_analysis
+from elements.menu import build_menubar
+from elements.toolbar import build_toolbar
+from elements.results import build_results, refresh_results
+from elements.notebook import build_notebook, pack_notebook
+from elements.variables import Build_Variables
+from elements.redirect import Redirect_text, NESSY_error
+from elements.splash import Splash, Splash_exit
+from elements.html import Html
+from elements.summary import build_summary
+from func.backcalc import Back_calc_gui
+from func.ddplot import DD_Plot_draw
+from func.dddplot import DDD_Plot_draw
+from func.synthetic_data import Synthetic_data
+from func.free_energy import Free_energy
+from func.vanthoff import Vanthoff, vanthoff_list
+from func.align_svg import Align_svg
+from func.color_code import Color_code_from_file
+
+#data analysis
+import data
+from data.results import open_selected_results
+from conf.data import build_data_grid, Reassign_data, Renumber_residues, delete_experiment, sync_exp1, sync_spinlock1, sync_spinlock_value1
+from func.alpha import Manual_model_selection
+
+
+
+class dispersion(wx.Frame):
+    def __init__(self, *args, **kwds):
+        # Flag for off resonance R1rho
+        self.isoffresonance = False
+
+        # Shared variables.
+        self.build_variables()
+
+        # create nessy settings in home folder
+        #self.create_home()
+
+        # Create window
+        kwds["style"] = wx.DEFAULT_FRAME_STYLE#wx.MAXIMIZE_BOX | wx.MINIMIZE_BOX | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.CAPTION | wx.CLIP_CHILDREN
+        wx.Frame.__init__(self, *args, **kwds)
+        self.SetTitle(_("NESSY - "+VERSION))
+        _icon = wx.EmptyIcon()
+        _icon.CopyFromBitmap(wx.Bitmap(NESSY_PIC, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(_icon)
+        self.SetMinSize((1000, 620))
+        self.Layout()
+        self.Centre()
+
+        # Background color
+        self.SetBackgroundColour(wx.NullColour)
+
+        # ask to exit after close box
+        self.Bind(wx.EVT_CLOSE, self.quit)
+
+        # Menu bar
+        build_menubar(self)
+
+        # Tool bar
+        build_toolbar(self)
+        self.toolbar.Realize()
+
+        # Status bar
+        self.statusbar = self.CreateStatusBar(1, 0)
+        self.statusbar.SetStatusWidths([-1])
+        statusbar_fields = [_("NESSY (C) 2010 - 2012 Michael Bieri")]
+        for i in range(len(statusbar_fields)):
+            self.statusbar.SetStatusText(statusbar_fields[i], i)
+
+        # Build notebook
+        build_notebook(self)
+
+        # Settings tab
+        build_settings(self)
+
+        # Collect data tab
+        build_collect_data(self, self.NUMOFDATASETS, self.isoffresonance)
+
+        # Start analysis tab
+        build_start_analysis(self)
+
+        # Results tab
+        build_results(self)
+
+        # Summary tab
+        build_summary(self)
+
+        # Pack elements
+        pack_notebook(self)
+
+        # Set project folder
+        directory = getcwd()
+        if directory == __main__.install_path:
+            directory = ''
+        self.proj_folder.SetValue(directory)
+
+        # Arguments
+        self.arguments()
+
+        # disable 'Start Calculation' button
+        if not self.debug:
+            self.start_calc.Enable(False)
+
+        # check for updates
+        try:
+            _thread.start_new_thread(version_check, (VERSION,))
+        except:
+            a = 'do nothing'
+
+
+    def new(self, event): # Refresh Project
+        q = question('Do you realy want to refresh your NESSY project?', self)
+        if q:
+            refresh_project(self)
+
+
+    def open(self, event): # Open Project File
+        q = question('Opening a saved project will delet current settings\n\nDo you  want to refresh your NESSY project?', self)
+        if q:
+            fileopen = openfile('Select file to open', self.PROJFOLDER, '', 'NESSY files (*.NESSY)|*.NESSY|all files (*.*)|*.*', self)
+            if not fileopen == False:
+                open_project(self, fileopen)
+                message('Successfully opened file:\n'+fileopen+'\n\nSet up experiments before starting calculation.', self)
+
+
+    def open_on_startup(self, file):
+            open_project(self, file)
+
+
+    def save(self, event): # Save Project File
+
+        if not self.SAVE_FILE:
+            # choose directory
+            filesave = savefile('Save as...', self.PROJFOLDER, 'save.NESSY', 'NESSY files (*.NESSY)|*.NESSY|all files (*.*)|*.*', self)
+
+            if not filesave == False:
+                # entries of results tree
+                save_project(self, filesave) # write parameters in selected file
+                self.SAVE_FILE = filesave
+
+        else:
+            save_project(self, self.SAVE_FILE) # write parameters in selected file
+
+
+    def save_as(self, event): # Save Project File
+
+        # choose directory
+        filesave = savefile('Save as...', self.PROJFOLDER, 'save.NESSY', 'NESSY files (*.NESSY)|*.NESSY|all files (*.*)|*.*', self)
+
+        if not filesave == False:
+            # entries of results tree
+            save_project(self, filesave) # write parameters in selected file
+            self.SAVE_FILE = filesave
+
+
+    def quit(self, event): # Exit Program
+        q = question('Do you realy want to quit NESSY ?', self)
+        if q:
+            # Show Splash Screen
+
+            #splash = Splash_exit()
+            #splash.Show()
+            #self.Close()
+            sys.exit(0)
+
+
+    def add_dataset(self, event):
+        # add new dataset
+        self.NUMOFDATASETS = self.NUMOFDATASETS + 1
+        build_collect_data(self, self.NUMOFDATASETS, self.isoffresonance)
+
+
+    def arguments(self):
+        """System arguments."""
+        # Debug flag
+        self.debug = False
+
+        # Open file is selected during start up
+        try:
+            if sys.argv[1]:
+                try:
+                    self.open_on_startup(sys.argv[1])
+                except:
+                    dummy = ''
+        except:
+            dummy = ''
+
+        # help, ie list of functions
+        if '-h' in sys.argv or '--help' in sys.argv:
+            print('NESSY is a software to analyse NMR relaxation dispersion data.')
+            print('\nLicence:\tGPL v3')
+            print('Version:\t'+ VERSION)
+            print('\nNESSY can be started using different arguments:')
+            print('\t$ nessy [File] [Arguments] [Input file]')
+            print('\nFile:\tNESSY project file to open upon start up.')
+            print('\nArguments:')
+            print('\t-h:\t\tDisplaying help text')
+            print('\t-p:\t\tPrints out original publication.')
+            print("\t--vanthhoff:\tInput for van't Hoff analysis (dG or K) are read\n\t\t\tfrom the Input file (add header 'T' for temperatur,\n\t\t\t'K' for K (kba/kab), 'dG' for dG or kab for k(AB),\n\t\t\tseparated by whitespace).")
+            print('\t--debug:\tStart NESSY in debugging mode (no error redirection,\n\t\t\tskipping data evaluation).')
+            print('\t--noredir:\tError message is not redirected to error dialog.')
+            print('\t--plot:\t\tLoads plots of list file (containing list of svg\n\t\t\tfilenames) and opens dialog to craete multiple\n\t\t\tplot alignment.')
+            print('\t--sethome:\tCreates home environment of NESSY')
+            if 'svn' in VERSION: print('\t--update:\tSynchronise NESSY with the latest svn version.')
+            print('')
+            print('')
+            sys.exit()
+
+        # Original publication
+        if '-p' in sys.argv:
+            print('If you are using NESSY, please cite the following article:')
+            print('M. Bieri, P.R. Gooley, Automated analysis of relaxation dispersion data using NESSY, in progress.')
+            print('')
+            print('')
+
+        # van't Hoff input as list file
+        if '--vanthoff' in sys.argv:
+            self.vanthoff = vanthoff_list(sys.argv)
+
+        # plots to generate multiple alignemnt image
+        if '--plot' in sys.argv:
+            file = open(sys.argv[len(sys.argv)-1], 'r')
+            self.align_svg_files = []
+            for line in file:
+                self.align_svg_files.append(line.replace('\n', ''))
+                print('Reading '+line.replace('\n', ''))
+            file.close()
+        else:
+            self.align_svg_files = None
+
+        # Craete new NESSY home environment
+        if '--sethome' in sys.argv:
+            # remove home folder
+            try:
+                rmtree(self.homefolder)
+            except:
+                print('Creating new home environment.')
+
+            # Create new home environment
+            self.create_home()
+
+        # Update NESSY
+        if '--update' in sys.argv:
+            print('\nUpdating NESSY using svn repository:\n\n')
+            system('svn up')
+            print('')
+            sys.exit()
+
+        # Enable Start Caluclation Button
+        if '--debug' in sys.argv:
+            print('\nNESSY is running in debugging mode.\n')
+            self.debug = True
+
+        # Redirect system output.
+        elif '--noredir' in sys.argv:
+            print('\nSystem redirection = off\n')
+        else:
+            self.error_redir()
+
+
+    def back_calc_int(self, event):
+        gui_calc = Back_calc_gui(self, None, -1, "")
+        gui_calc.Show()
+
+
+    def bruker_dynamics_center_import(self, Event):
+        """Import of Bruker Dynamic Center Project."""
+        bruk = Bruker_project(self, None, -1, "")
+        bruk.Show()
+
+
+    def build_variables(self):
+        """Create shared variables"""
+
+        # NESSY working variables
+        Build_Variables(self)
+
+        # Temprorary folder
+        self.tmp_folder = ''
+
+
+    def change_hetnuc(self, event, exp):
+        choice = int(self.HETNUC[exp].GetSelection())
+        # globally change of heteronucleus
+        for i in range(len(self.HETNUC)):
+            self.HETNUC[i].SetSelection(choice)
+
+
+    def clear_results(self, event):
+        # clear results
+        q = question('Do you realy want to clear the results?\n\nThis will remove the entries of the results tree, but files will be kept.', self)
+
+        # creal
+        if q:   refresh_results(self)
+
+
+    def cluster(self, event):
+        """Cluster residues for simultaneus fit."""
+        c = Cluster_residues(self, self, -1, "")
+        c.Show()
+
+
+    def color_code(self, event):
+        """Create color coded structures."""
+        exe = Color_code_from_file(str(self.pdb_file.GetValue()), None, -1, "")
+        exe.Show()
+
+
+    def create_csv(self, event):
+        # create multiple alignment of plots
+        align_svg = Align_svg(self, None, -1, "")
+        align_svg.Show()
+
+
+    def create_home(self):
+        # create home folder to store settings and projects
+        home = getenv("HOME")
+        self.homefolder = home+sep+'.nessy'
+
+        # check if .nessy folder was already created
+        dirs = listdir(home)
+        if '.nessy' in dirs:
+            # load settings
+            file = open(self.homefolder+sep+'settings.nessy', 'r')
+            for line in file:
+                self.SETTINGS = stringtolist(line)
+            file.close()
+
+            # load opened projects
+            file = open(self.homefolder+sep+'projects.nessy', 'r')
+            self.opened_projects = []
+            for line in file:
+                if not line in ['', '\n']:
+                    self.opened_projects.append(line.replace('\n', ''))
+            file.close()
+
+            print('NESSY lives in '+__main__.install_path+'\n')
+            return
+
+        # create home directory for nessy
+        try:
+            makedirs(home+sep+'.nessy')
+        except:
+            return
+
+        # write settings
+        file = open(self.homefolder+sep+'settings.nessy', 'w')
+        file.write(str(self.SETTINGS))
+        file.close()
+
+        # write project summary
+        file = open(self.homefolder+sep+'projects.nessy', 'w')
+        file.close()
+
+        print('NESSY lives in '+__main__.install_path+'\n')
+        print('Craeted NESSY home environment in '+self.homefolder+'.')
+
+
+    def create_synthetic_data(self, event):
+        create_data = Synthetic_data(str(self.proj_folder.GetValue()), None, -1, "")
+        create_data.Show()
+
+
+    def constraints(self, event):
+        # opens set up for constraints
+        c = Constraints(self, self, -1, "")
+        c.Show()
+
+
+    def contact(self, event):
+        # Opens default email program
+        webbrowser.open_new('mailto:nessy-users@gna.org')
+
+
+    def delete_dataset(self, event):
+        # Delets current experiment
+        # actual experiment
+        current = self.MainTab.GetSelection()
+
+        # number of experiments
+        experiments = self.MainTab.GetPageCount() -4
+
+        # abort if selected tab is Settings, Start Analysis, View Results or Summary
+        if current in [0, experiments+1, experiments+2, experiments+3]:
+            error_popup("Only experiments can be deleted!", self)
+            return
+
+        # return, if only one experiment left
+        if experiments == 1:
+            error_popup("Only one experiment left!\nCan't delete last experiment.", self)
+            return
+
+        # remove experiment
+        delete_experiment(self, current)
+
+
+    def dd_plot(self, event):
+        # create 3d plots
+        plot_gui = DD_Plot_draw(self, None, -1, "")
+        plot_gui.Show()
+
+
+    def ddd_plot(self, event):
+        # create 3d plots
+        plot_gui = DDD_Plot_draw(self, None, -1, "")
+        plot_gui.Show()
+
+
+    def import_data_from_file(self, event):
+        dataimport = import_data(self, False, False, None, -1, "")
+        dataimport.Show()
+
+
+    def import_residue(self, event):
+        # Import data on per reside basis
+        dataimport = import_data(self, False, True, None, -1, "")
+        dataimport.Show()
+
+
+    def license(self, event):
+        # opens the home page
+        mainframe = Html(ROOT+"COPYING", None, -1, "")
+        mainframe.Show()
+
+
+    def manual_selection(self, event):
+        # Manual model selection
+        m = Manual_model_selection(self, self, -1, "")
+        m.Show()
+
+
+    def mailing_lists(self, event):
+        # Opens NESSY mailing list on gna.org
+        webbrowser.open('http://gna.org/mail/?group=nessy', 1)
+
+
+    def manual(self, event):
+        # opens the home page
+        mainframe = Html(ROOT+"html"+sep+"manual.html", None, -1, "")
+        mainframe.Show()
+
+
+    def menu_item(self, menu, id = None, text = '', tooltip = '', pic = None):
+        '''add menu item'''
+
+        #create entry
+        entry = wx.MenuItem(menu, id, text, tooltip)
+
+        # add icon
+        if pic:
+            entry.SetBitmap(wx.Bitmap(pic))
+
+        # add entry
+        menu.AppendItem(entry)
+
+
+    def models(self, event):
+        Models_to_select = Select_models(self, None, -1, "")
+        Models_to_select.Show()
+
+
+    def multi_import_data_from_file(self, event):
+        dataimport = import_data(self, True, False, None, -1, "")
+        dataimport.Show()
+
+
+    def import_vd(self, event):
+        vd_import(self)
+
+
+    def about(self, event): # about NESSY
+        info_nessy()
+
+
+    def previous(self, event): # goto previous tab
+        sel = self.MainTab.GetSelection()
+        sel = sel - 1
+        if sel < 0:
+            sel = 3
+        self.MainTab.SetSelection(sel)
+
+
+    def n_state(self, event):
+        Nstate = N_state_model(self, 'fast', None, -1, "")
+        Nstate.Show()
+
+
+    def n_state_slow(self, event):
+        Nstate = N_state_model(self, 'slow', None, -1, "")
+        Nstate.Show()
+
+
+    def nessy_settings(self, event): # Nessy Settings
+        Nessy_settings = settings(self, None, -1, "")
+        Nessy_settings.Show()
+
+
+    def next(self, event): # goto next tab
+        sel = self.MainTab.GetSelection()
+        sel = sel + 1
+        if sel > (self.MainTab.GetPageCount()-1):
+            sel = 0
+        self.MainTab.SetSelection(sel)
+
+
+    def nmrview_import(self, event):
+        # Import NMRView export
+        nv = NMRView_project_import(self, self, -1, "")
+        nv.Show()
+
+
+    def select_proj_folder(self, event): # select project folder
+        folder = opendir('Please select Project Folder', self.PROJFOLDER, self)
+        if not folder == False:
+            self.proj_folder.SetValue(folder)
+            self.PROJFOLDER = folder
+
+
+    def shift_data(self, event):
+        shiftdata = Reassign_data(self, None, -1, "")
+        shiftdata.ShowModal()
+
+
+    def shift_diff(self, event):
+        shiftdiff = Shift_difference(self, None, -1, "")
+        shiftdiff.Show()
+
+
+    def shift_resno(self, event):
+        shift = Renumber_residues(self, None, -1, "")
+        shift.ShowModal()
+
+
+    def select_pdb_file(self, event): # select pdb file
+        fileopen = openfile('Select PDB file to open', self.PROJFOLDER, '', 'PDB files (*.pdb)|*.pdb|all files (*.*)|*.*', self)
+        if not fileopen == False:
+            self.pdb_file.SetValue(fileopen)
+            self.PDB = fileopen
+            pdb_to_sequence(self)
+
+
+    def select_res(self, event):
+        sel = Select_residues(self, None, -1, "")
+        sel.Show()
+
+    def sync_exp(self, event, selection):
+        sync_exp1(self, event, selection)
+
+
+    def sync_spinlock(self, event, experiment=0):
+        sync_spinlock1(self, event, experiment)
+
+
+    def sync_spinlock_value(self, event):
+        sync_spinlock_value1(self, event)
+
+
+    def edit_exp(self, event): # edit experiment
+        # tab index
+        index = self.MainTab.GetSelection()-1
+
+        # CPMG set up
+        if self.sel_experiment[index].GetSelection() == 0:
+
+            #set up CPMG Experiment
+            cpmg_setup = Setup_experiment(self, 'CPMG', None, -1, "")
+            cpmg_setup.Show()
+
+        # R1p on-resonance set up
+        if self.sel_experiment[index].GetSelection() == 1:
+            cpmg_setup = Setup_experiment(self, 'on', None, -1, "")
+            cpmg_setup.Show()
+
+        # R1p off-resonance set up
+        if self.sel_experiment[index].GetSelection() == 2:
+            cpmg_setup = Setup_experiment(self, 'off', None, -1, "")
+            cpmg_setup.Show()
+
+        # HD exchange
+        if self.sel_experiment[index].GetSelection() == 3:
+            cpmg_setup = Setup_HD(self, None, -1, "")
+            cpmg_setup.Show()
+
+
+    def equations(self, events):
+        # opens the home page
+        mainframe = Html(ROOT+"html"+sep+"equations.html", None, -1, "")
+        mainframe.Show()
+
+
+    def erase(self, event):
+        # erase data set
+        delete_data = Erase_dataset(self, None, -1, "")
+        delete_data.ShowModal()
+
+
+    def error_redir(self):
+        # build dialog
+        self.error_frame = NESSY_error(self, -1, "")
+
+        # Redirect text
+        #redir = Redirect_text(self.error_frame)
+        redir = Redirect_text([self.report_panel, self.MainTab, self.MainTab.GetPageCount(), 3])
+        sys.stderr = redir
+        sys.stdout = redir
+
+
+    def export_log(self, event):
+        # export log entries
+        filename = savefile('Save log as...', self.PROJFOLDER, 'save.log', 'all files (*.*)|*', self)
+        # save entries to file
+        if filename:
+            file = open(filename, 'w')
+            file.write(str(self.report_panel.GetValue()))
+            file.close()
+
+
+    def fasta_import(self, event):
+        # import FASTA sequence
+        FASTA_import = Import_FASTA(self, None, -1, "")
+        FASTA_import.Show()
+
+
+    def free_energy(self, event):
+        # Free energy calculation
+        freenergy = Free_energy(self, None, -1, "")
+        freenergy.Show()
+
+
+
+    def get_data(self, event): # import data from set up tab
+        # Feedback that SpinLock experiments are in beta phase
+        if self.sel_experiment[0].GetSelection() in [1, 2]:
+            message('Spin lock R1rho analysis is in beta stage (test phase).\n\nPlase report any bugs to:\n\n\tnessy-users@gna.org', self)
+
+        # output
+        self.isrunning = True
+
+        self.get_data_check()
+
+        wx.CallAfter(self.get_data_observe, ())
+
+
+    def get_data_check(self):
+        #check if data is complete
+
+        try:
+            _thread.start_new_thread(checkinput, (self,))
+        except:
+            print('ERROR!!')
+
+
+    def get_data_observe(self, event):
+        '''Displays a cycling progress bar.'''
+
+        # FIXME
+        return
+
+        # Build the progress dialog
+        dlg = PP.PyProgress(self, -1, "NESSY", "Evaluating Data.")
+
+        # display
+        while self.isrunning:
+            # wait 30 ms
+            wx.MilliSleep(30)
+
+            # update bar
+            keepGoing = dlg.UpdatePulse()
+
+        # Close dialog
+        dlg.Destroy()
+
+        if self.error_flag:
+            wx.CallAfter(self.report_panel.AppendText, '\n\nImport Error!\n> '+str(self.error_flag))
+
+
+    def startcalc(self, event): # start calculation
+        # disable 'Start Calculation' button
+        self.start_calc.Enable(False)
+
+        # Relaxation dispersion
+        if self.sel_experiment[0].GetSelection() in [0, 1, 2]:
+
+            # Execute in new thread
+            _thread.start_new_thread(Run_dispersion_calc, (self,))
+
+            # Disable n-States model on Mac of Windows ('darwin', 'win32', 'cygwin')
+            if not 'darwin' in sys.platform:
+                self.menubar.EnableTop(4, False)
+
+        # HD exchange
+        if self.sel_experiment[0].GetSelection() == 3:
+
+            # Execute in new thread
+            try:
+                _thread.start_new_thread(Calculate_HD, (self,))
+
+                # Disable n-States model on Mac of Windows ('darwin', 'win32', 'cygwin')
+                if not 'darwin' in sys.platform:
+                    self.menubar.EnableTop(4, False)
+
+            except:
+                a = 'nothing'
+
+
+    def open_results(self, event): # open selected results of tree
+        item = self.tree_results.GetSelection()
+        open_selected_results(self, self.tree_results.GetItemText(item), item)
+
+
+    def tutorial(self, event):
+        # opens the home page
+        mainframe = Html(ROOT+"html"+sep+"tutorial.html", None, -1, "")
+        mainframe.Show()
+
+
+    def units(self, events):
+        # opens the home page
+        mainframe = Html(ROOT+"html"+sep+"units.txt", None, -1, "")
+        mainframe.Show()
+
+
+    def update(self, event):
+        # disable window
+        wx.CallAfter(self.Enable, (False))
+
+        # perform update
+        _thread.start_new_thread(self.update_do, ())
+
+
+    def update_do(self):
+        # update program using svn
+        system('svn up')
+
+        # enable window
+        self.Enable(True)
+
+        # message
+        message('NESSY updated!', self)
+
+
+    def vant_hoff(self, event):
+        # van't Hoff Analysis
+        analysis = Vanthoff(self, None, -1, "")
+        analysis.Show()
+
+
+# end of class dispersion
+
+def introstring():
+    print('')
+    print('')
+    print('________________________________________________________________')
+    print('')
+    print('NESSY - NMR Relaxation Dispersion Spectroscopy Analysis Software')
+    print('')
+    print('(C) 2010 - 2011 Michael Bieri')
+    print('(C) 2011 NESSY development team')
+    print('________________________________________________________________')
+    print('')
+    print('')
+    print('Michael Bieri and Paul R. Gooley, BMC Bioinformatics 2011, 12:421')
+    print('')
+    print('')
+
+
+
+if __name__ == "__main__":
+    import gettext
+    gettext.install("NESSY") # replace with the appropriate catalog name
+
+    # Intro String
+    introstring()
+
+    # Check matplotlib for buggy versions.
+    if matplotlib.__version__ == '1.2.0':
+        raise ImportError("Matplotlib version 1.2.0 is far too buggy, NESSY cannot be run.  Please upgrade to a newer version.")
+
+    NESSY = wx.PySimpleApp()
+
+    # Create Splash Screen
+    splash = Splash()
+
+    # Show splash
+    splash.Show()
+
+    # Create main window
+    wx.InitAllImageHandlers()
+    mainframe = dispersion(None, -1, "")
+    NESSY.SetTopWindow(mainframe)
+
+    # show main window
+    mainframe.Show()
+    NESSY.MainLoop()

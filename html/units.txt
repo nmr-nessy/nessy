@@ -1,0 +1,382 @@
+SI Supplementary Units
+
+The dimensionless and hidden radian unit.
+
+
+
+
+Warning: If hard core NMR or physics theory is not to your taste,
+please do not read any further!
+
+
+This is important for the understanding and interpretation of spin 
+relaxation and relaxation dispersion experiments. The reason is 
+because parameters R1, R2 and R2effective (R2eff) are measured
+in rad/s. As I describe in section 1, the radian unit can be dropped
+because it is plainly obvious that NMR and relaxation is an angular
+process and hence radian units are implied (that was sarcastic).
+Hence R2 can be said to be in units of 1/s, but never, ever Hz. Also
+note that because of the SI conventions described below, describing
+the correlation time in s units does not prove that there are no
+radian units. But reporting rates as Hz implies no radian units
+whereas reporting as 1/s instead often means radian units are present.
+
+This is also a follow on from the comprehensive unit analysis of
+Abragam's relaxation equations at
+https://mail.gna.org/public/relax-devel/2007-06/msg00012.html.
+
+Keywords: 
+dimensionless units, hidden units, radian, relaxation rates,
+rotational correlation times, SI supplementary units, spherical
+harmonics.
+
+
+
+1 SI supplementary units.
+
+1.1 SI supplementary units (radian and steradian).
+
+Quote from the PDF linked below (page 26) in the table titled "Table
+3. Coherent derived units in the SI with special names and symbols"
+about the 'SI coherent derived unit' for the 'plane angle' unit of
+radian:
+"(b) The radian and steradian are special names for the number one
+that may be used to convey information about the quantity concerned.
+In practice the symbols rad and sr are used where appropriate, but the
+symbol for the derived unit one is generally omitted in specifying the
+values of dimensionless quantities."
+
+Quote from the PDF linked below (page 28) in the section titled "2.2.3
+Units for dimensionless quantities, also called quantities of
+dimension one":
+"In a few cases, however, a special name is given to the unit one, in
+order to facilitate the identification of the quantity involved. This
+is the case for the radian and the steradian. The radian and steradian
+have been identified by the CGPM as special names for the coherent
+derived unit one, to be used to express values of plane angle and
+solid angle, respectively, and are therefore included in Table 3."
+
+Quote from the PDF linked below (page 42) in the section titled "5.3.7
+Stating values of dimensionless quantities, or quantities of dimension
+one". This is not very clear but explains why the rad unit is many
+times hidden, and why the other dimensionless units such as % and ppm
+must be stated (need to read the whole section for that):
+"As discussed in Section 2.2.3, the coherent SI unit for dimensionless
+quantities, also termed quantities of dimension one, is the number
+one, symbol 1. Values of such quantities are expressed simply as
+numbers. The unit symbol 1 or unit name "one" are not explicitly
+shown, nor are special symbols or names given to the unit one, apart
+from a few exceptions as follows. For the quantity plane angle, the
+unit one is given the special name radian, symbol rad, and for the
+quantity solid angle, the unit one is given the special name
+steradian, symbol sr. For the logarithmic ratio quantities, the
+special names neper, symbol Np, bel, symbol B, and decibel, symbol dB,
+are used (see 4.1 and Table 8, p. 127)."
+
+Quotes from the PDF linked below (page 67) from the appendix section
+titled "SI supplementary units (radian and steradian)":
+"...the units radian and steradian are usually introduced into
+expressions for units when there is need for clarification..."
+
+Quote from the PDF linked below (page 67) from the appendix section
+titled "Elimination of the class of supplementary units in the SI" for
+resolution 8 of the CGPM conference:
+"decides..."
+"to interpret the supplementary units in the SI, namely the radian and
+the steradian, as dimensionless derived units, the names and symbols
+of which may, but need not, be used in expressions for other SI
+derived units, as is convenient,"
+"and, consequently, to eliminate the class of supplementary units as a
+separate class in the SI."
+
+Links:
+http://www.bipm.org/en/si/si_brochure/
+http://www.bipm.org/utils/common/pdf/si_brochure_8_en.pdf
+
+
+1.2 IUPAC report.
+
+This reference explains a bit more clearly why the radian unit is
+invisible in most situations.
+
+Title: Quantities, units, and symbols in physical chemistry (second edition).
+
+Quote from page 11:
+"The units radian (rad) and steradian (sr), for plane angle and solid
+angle respectively, are described as 'SI supplementary units' [3].
+Since they are of dimension 1 (i.e. dimensionless), they may be
+included if appropriate, or they may be omitted if clarity is not lost
+thereby, in expressions for derived SI units."
+
+This is the part meaning that radians are implied if you are doing
+anything angular. I don't know what they mean by clarity because by
+omitting them it complicates things. Maybe you have to be a physicist
+before you can see this clarity.
+
+
+
+2 Spherical harmonics.
+
+The time dependent spherical harmonic can be written as
+
+Y_ml(theta(t), phi(t)),
+
+where theta(t) and phi(t) are the time dependent spherical angles in
+the dimensionless radian units. The time t is normal time and hence
+has no hidden radian units. Spherical harmonics are the angular
+portion of the solution to Laplace's equation, and I would assume that
+because it is angular, it is using the radian angular SI unit.
+
+
+
+3 Rotational correlation times.
+
+My opinion here is that the rotational correlation time is a
+descriptor of the change of angles - and these angles are in the
+hidden, dimensionless radian units. Hence the correlation time is
+measured in s/rad or in the hidden supplementary unit notation simply
+s. But I prefer to think of the concept as the diffusion rate, a
+measure of the rate of rotational Brownian diffusion.
+
+
+3.1 Book quotations.
+
+Title: Physical Properties of Lipids
+Authors: Alejandro G. Marangoni, Suresh Narine
+Subject: Fluorescence
+Year: 2002
+Link: 
+http://books.google.com/books?id=OCBav13l_MsC&pg=PA166&dq=rotational+correlation+time+radian&lr=
+Quote (page 166): "The rotational correlation time [phi] is the time
+required by the fluorophore to rotate through an arc of 1 radian (phi
+= 1/(2.pi.nu))."
+
+Title: Biophysics
+Authors: Gerald Ehrenstein, Harold Lecar
+Subject: NMR spin relaxation
+Year: 1982
+Link: 
+http://books.google.com/books?id=rThFVFmAdDAC&pg=PA14&dq=rotational+correlation+time+radian
+Quote (page 14): "The value of tau_c can be approximated as the time
+required for the molecule containing the resonant nucleus to either
+rotate 1 radian (rotational correlation time) or diffuse a distance
+equivalent to its own dimensions (translational correlation time)."
+
+Title: Protein NMR Spectroscopy (second edition)
+Authors: John Cavanagh, Wayne J. Fairbrother, Arthur G. Palmer, III,
+Nicholas J. Skelton, Mark Rance
+Subject: NMR relaxation
+Year: 2007
+Link: 
+http://books.google.com/books?id=2-LqLHOLHZwC&pg=PA366&dq=rotational+correlation+time+radian
+Quote (page 366): "...in which the correlation time, tau_c, is
+approximately the average time for the molecule to rotate by 1
+radian."
+
+Title: Hydration Processes in Biology: Theoretical and Experimental 
+Approaches
+Author: Marie-Claire Bellissent-Funel
+Subject: Water motion
+Year: 1999
+Link: 
+http://books.google.com/books?id=9tJaB00wXhgC&pg=PA243&dq=rotational+correlation+time+radian&lr=
+Quote (page 243): "For such sites, the rotational and translational
+diffusion of water should both be rate-limited by H-bond
+rearrangements and it can therefore be argued that the residence time
+(the time taken to diffusion ca. 3 Angstrom) should be close to the
+first-rank rotational correlation time (the time taken to rotate
+through one radian), i.e., tau_W ~= 3 tau_s (where tau_s is the
+second-rank rotational correlation time)."
+
+Title: NMR of Macromolecules: A Practical Approach
+Author: Gordon Carl Kenmure Roberts
+Subject: NMR relaxation
+Year: 1993
+Link: 
+http://books.google.com/books?id=K7n7SnmDbSAC&pg=PA9&dq=rotational+correlation+time+radian&lr=
+Quote (page 9): "The rotational correlation time, tau_c, is the time
+taken for the particle to rotate through an angle of one radian
+(57°)."
+
+Title: Fundamentals of Protein NMR Spectrosopy
+Authors: Gordon S. Rule, T. Kevin Hitchens
+Subject: NMR relaxation
+Year: 2006
+Link: 
+http://books.google.com/books?id=8vmf5y6Jf84C&pg=PA441&dq=rotational+correlation+time+radian
+Quote (page 441): "[tau_c] is the time required for a molecule to
+rotate, on average, 1 radian."
+
+Title: Nuclear Magnetic Resonance in Biochemistry: Principles and 
+Applications
+Author: Thomas L. James
+Subject: NMR
+Year: 1975
+Link: 
+http://books.google.com/books?id=iItqAAAAMAAJ&q=rotational+correlation+time+radian&dq=rotational+correlation+time+radian&pgis=1
+Quote (page ?): "The rotational correlation time (rc or rr) provides
+a ... having many molecular collisions before it turns 1 radian."
+
+Title: Biophysical Chemistry: Principles, Techniques, and Applications
+Author: Alan G. Marshall
+Subject: Rotational diffusion (for fluorescence)
+Year: 1978
+Link: 
+http://books.google.com/books?id=PJhqAAAAMAAJ&q=rotational+correlation+time+radian&dq=rotational+correlation+time+radian&pgis=1
+Quote (page 720): "...decay of the correlation function for
+rotational diffusion, tau_rot may also be thought of as the
+characteristic time it takes for a typical macromolecule to rotate
+(diffusionally) through an angle of the order of a radian..."
+
+Title: Practical NMR Relaxation for Chemists
+Author: Vladimir I. Bakhmutov
+Subject: NMR relaxation
+Year: 2004
+Link: 
+http://books.google.com/books?id=_gIh9KHIOx4C&pg=PA13&dq=rotational+correlation+time+radian&lr=
+Quote (page 13): "However, a more correct definition of the tau_c is
+connected with the, so-called autocorrelation function in the theory
+of nuclear relaxation where the tau_c is an average time for the
+molecule to progresses (sic.) through one radian."
+
+Title: Modern Protein Chemistry: Practical Aspects
+Authors: Gary C. Howard, William E. Brown
+Subject: NMR relaxation
+Year: 2001
+Link: 
+http://books.google.com/books?id=MIxdC7GPz0sC&pg=PA45&dq=rotational+correlation+time+radian&lr=
+Quote (page 45): "[tau_c] is roughly equal to the time it takes a
+molecule to rotate 1 radian while undergoing random rotational
+motion."
+
+Title: MRS of the Brain and Neurological Disorders
+Authors: Koji Terada, Akihiro Igata, Toshiro Fujimoto, Tetsuhiko
+Asakura, Institute of Advanced Medical Technology
+Subject: Imaging
+Year: 2000
+Link: 
+http://books.google.com/books?id=kF2dw7c33cAC&pg=PA41&dq=rotational+correlation+time+radian&lr=#PPA43,M1
+Quote (page 41): "...Brownian motion. This has a time scale, the
+rotational correlation time (tau_c) defined as the time taken on
+average for a solute molecule to rotate by one radian or roughly the
+reciprocal of the rate of tumbling in solution of the relevant piece
+of the molecule."
+
+Title: Structural Biology: Practical NMR Applications
+Author: Quincy Teng
+Subject: NMR relaxation
+Year: 2005
+Link: 
+http://books.google.com/books?id=dRmmGFkummIC&pg=PA36&dq=rotational+correlation+time+radian&lr=#PPA36,M1
+Quote (page 36): "The correlation time is used to describe the rate
+of random motions and is expressed as the average time between
+collisions for translational motions or the time for a molecule to
+rotate one radian in rotational motion."
+
+Title: High-resolution NMR Techniques in Organic Chemistry
+Author: Timothy D. W. Claridge
+Subject: NMR relaxation
+Year: 1999
+Link: 
+http://books.google.com/books?id=9srIkkL-YMkC&pg=PA283&dq=rotational+correlation+time+radian&lr=#PPA284,M1
+Quote (page 283): "... its rotational correlation time, tau_c. This
+is usually taken to define the average time required for the molecule
+to rotate through an angle of 1 radian about any axis, ..."
+
+Title: A Dictionary of Concepts in NMR
+Author: S. W. Homans
+Subject: NMR relaxation
+Year: 1989
+Link: 
+http://books.google.com/books?id=wpggNxUrzSMC&pg=PA72&dq=rotational+correlation+time+radian&lr=
+Quote (page 72): "For example, in the case of random translational
+motions, tau_c is defined as the mean time between collisions, whereas
+in the case of reorientational (rotational) motion, it is defined as
+the average time for the molecule to rotate by one radian."
+Note this book later on page 72 makes the mistake (according to me) of
+saying that 1/tau_c is in Hertz.
+
+Title: Molecular Crystals and Liquid Crystals
+Author: Gordon and Breach Science Publishers
+Subject: Crystals
+Year: 1974
+Link: 
+http://books.google.com/books?id=bTW3AAAAIAAJ&q=rotational+correlation+time+radian&dq=rotational+correlation+time+radian&lr=&pgis=1
+Quote (page ?): "The rotational correlation time may be computed from
+the linewidths of the ... roughly the time required for the radical to
+reorient by 1 radian is given by ..."
+
+Title: Industrial Research/development
+Author: Technical Pub. Co.
+Subject: NMR relaxation
+Year: 1978
+Link: 
+http://books.google.com/books?id=EstVAAAAMAAJ&q=rotational+correlation+time+radian&dq=rotational+correlation+time+radian&lr=&pgis=1
+Quote (page ?): " is the Larmor angular frequency in radians/sec and
+tau_c is the rotational correlation time of the nuclei in sec/radian."
+
+
+
+4 Relaxation rates
+
+Here, my opinion is that the R1 and R2 units are rad/s. The equations
+from the book quotations hopefully show this conversion from Hz to
+rad/s.
+
+
+4.1 Book quotations.
+
+Title: Nuclear Spin Relaxation in Liquids: Theory, Experiments, and
+Applications
+Authors: Józef Kowalewski, Lena Mäler
+Subject: NMR relaxation
+Year: 2006
+Link: 
+http://books.google.com/books?id=MiUfcE1C9CQC&pg=PA14&dq=relaxation+rate+radian&lr=#PPA19,M1
+Quote (page 15): "Because the natural unit for the angular frequency
+is radians per second, the relaxation rate, or the inverse of
+relaxation time, R2 = 1/T2, should indeed also be expressed in these
+units. Usually, relaxation times are given in seconds (the rates are
+given in 1/s), which tacitly implies that the radians can be omitted;
+we note in parenthesis that the radian is considered a dimensionless
+unit in physics."
+Quote 2 (page 15): "The Fourier transform of an exponential decay is
+Lorentzian centered at zero frequency, with the full width at
+half-height (in Hertz) equal to Delta_nu = 1/(pi.T2)..."
+
+Title: Practical NMR Relaxation for Chemists
+Author: Vladimir I. Bakhmutov
+Subject: NMR relaxation
+Year: 2004
+Link: 
+http://books.google.com/books?id=_gIh9KHIOx4C&pg=PA13&dq=rotational+correlation+time+radian&lr=
+Quote (page 9): "...linewidths, Delta_nu, measured in Hz, are
+directly controlled by T1 and T2 relaxation times according to:
+Delta_nu = 1/(pi T1,2)"
+
+Title: Modern Protein Chemistry: Practical Aspects
+Authors: Gary C. Howard, William E. Brown
+Subject: NMR relaxation
+Year: 2001
+Link: 
+http://books.google.com/books?id=MIxdC7GPz0sC&pg=PA45&dq=rotational+correlation+time+radian&lr=
+Quote (page 45): "The actual relationship between the spin-spin
+relation rate and the lines width (Delta_nu) is given by R2, the rate
+of spin-spin relaxation; T2 is the time constant for spin-spin
+relaxation,
+Delta_nu = 1/pi . R2 = 1/(pi.T2)."
+
+Title: Structural Biology: Practical NMR Applications
+Author: Quincy Teng
+Subject: NMR relaxation
+Year: 2005
+Link: 
+http://books.google.com/books?id=dRmmGFkummIC&pg=PA36&dq=rotational+correlation+time+radian&lr=#PPA36,M1
+Quote (page 37): "...T1 relaxation is inversely proportional to
+correlation time tau_c..."
+
+
+
+Edward d'Auvergne 
+
+

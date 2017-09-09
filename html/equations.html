@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NESSY - NMR Relaxation Dispersion Spectroscopy analysis software</title>
+<link rel="SHORTCUT ICON" href="favicon.ico">
+<style type="text/css">
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+}
+a:link {
+	color: #000;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: none;
+	color: #666;
+}
+a:active {
+	text-decoration: none;
+	color: #000;
+}
+body {
+	background-color: #EAEAEA;
+}
+</style>
+</head>
+
+<body>
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF"><table width="900" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="120" rowspan="3"><a href="index.html"><img src="pics/NESSY.png" alt="NESSY" width="100" height="85" border="0" /></a></td>
+        <td width="660" align="center" valign="top"><h2><strong>NESSY</strong></h2></td>
+        <td width="120" rowspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top"><p><strong>N</strong>MR R<strong>e</strong>laxation Di<strong>s</strong>persion <strong>S</strong>pectroscop<strong>y</strong> Analysis Software for Windows, Mac and Linux</p></td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF"><img src="pics/NESSY_banner.png" width="900" height="293" /></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF"><h3>Equations
+    </h3>
+      <p>If you are using NESSY, please cite the following article:</p>
+      <blockquote>
+        <p><a href="http://www.biomedcentral.com/1471-2105/12/421"><u>Automated NMR relaxation dispersion data analysis using NESSY, M. Bieri and P. Gooley, BMC Bioinformatics 2011, 12:421</u></a></p>
+      </blockquote>
+      <p>&nbsp;</p>
+      <h3><strong><em>Equations</em></strong></h3>
+      <p><strong>Effective transverse relaxation rate R2eff:</strong></p>
+      <blockquote>
+        <p><img src="pics/equations/r2eff.png" width="318" height="54" /></p>
+      </blockquote>
+      <p>&nbsp;</p>
+      <p><strong>Model 1:</strong> No exchange</p>
+      <blockquote>
+        <p><img src="pics/equations/Model_1.png" width="114" height="49" /></p>
+</blockquote>
+      <p>&nbsp;</p>
+      <p><strong>Model 2:</strong> 2 state, fast exchange (Meiboom equation)</p>
+      <p><em>Luz Z, Meiboom S (1963) Nuclear magnetic resonance study of proteolysis of trimethylammonium ion in aqueous solution - order of reaction with respect to solvent. Journal of Chemical Physics 39 (2):366</em></p>
+      <blockquote>
+        <p><img src="pics/equations/Model_2.png" width="436" height="67" /></p>
+        <p>with:</p>
+        <blockquote>
+          <p><img src="pics/equations/Model_2-1.png" width="207" height="51" /></p>
+        </blockquote>
+      </blockquote>
+      <p>&nbsp;</p>
+      <p><strong>Model 3: </strong>2 state, slow exchange (Richard-Carver equation)</p>
+      <p><em>Carver JP, Richards RE (1972) General 2-site solution for chemical exchange produced dependence of T2 upon Carr-Purcell pulse separation. Journal of Magnetic Resonance 6 (1):89 </em></p>
+      <blockquote>
+        <p><img src="pics/equations/Model_3.png" width="609" height="61" /></p>
+        <p>with:</p>
+        <blockquote>
+          <p><img src="pics/equations/Model_3-1.png" width="272" height="280" /></p>
+        </blockquote>
+      </blockquote>
+      <p>&nbsp;</p>
+      <p><strong>Model 4:</strong> 3 state, fast exchange </p>
+      <p><em>O'Connell NE, Grey MJ, Tang Y, Kosuri P, Miloushev VZ, Raleigh DP, Palmer AG, 3rd (2009) Partially folded equilibrium intermediate of the villin headpiece HP67 defined by 13C relaxation dispersion. J Biomol NMR 45 (1-2):85-98</em></p>
+      <blockquote>
+        <p><img src="pics/equations/Model_4.png" width="501" height="74" /></p>
+        <p>with:</p>
+        <blockquote>
+          <p><img src="pics/equations/Model_4-1.png" width="275" height="45" /></p>
+        </blockquote>
+      </blockquote>
+      <p>&nbsp;</p>
+      <p><strong>Model 5:</strong> 3 state, slow exchange</p>
+      <blockquote>
+        <p><img src="pics/equations/Model_5.png" width="726" height="67" /> </p>
+        <p>with:</p>
+        <blockquote>
+          <p><img src="pics/equations/Model_5-1.png" width="333" height="305" /></p>
+        </blockquote>
+      </blockquote>
+      <p>&nbsp;</p>
+      <p><strong>n-State:</strong></p>
+      <blockquote>
+        <p>Two n-state models are included: fast and slow exchange (as models 4 and 5, but unlimited i)</p>
+      </blockquote>
+      <p>&nbsp;</p>
+      <p>&nbsp; </p>
+      <p><strong>Curvefit:</strong></p>
+      <blockquote>
+        <p>Curvefit of individual models to experimental effective transversal relaxation rates is performed using the Levenberg-Marquardt algorithm of sum of least squares by minimising the following target function:</p>
+        <p><img src="pics/equations/chi2.png" width="252" height="92" /></p>
+      </blockquote>
+      <p>&nbsp;</p>
+      <p><strong>Error of data:</strong></p>
+      <blockquote>
+        <p>Error R2(i,eff,fit) of R2eff were assumed to be constant within each residue and calculated according to the definition of pooled variance. The standard error for the effective transversal relaxation rate constant σ(R2eff ) is calculated using Ndup replicated experiments for vCPMG values, such that n(j) replicates were obtained at (vCPMG)j. The effective transverseal relaxation rate of a given peak R2eff in these n(j) replicates has the standard deviation sj:</p>
+        <p><img src="pics/equations/error.png" width="227" height="82" /></p>
+      </blockquote>
+    <p>&nbsp;</p>
+    <p><strong>Conformational /chemical exchange rate:</strong></p>
+    <p><em>Millet O, Loria JP, Kroenke CD, Pons M, Palmer AG (2000) The static magnetic field dependence of chemical exchange linebroadening defines the NMR chemical shift time scale. Journal of the American Chemical Society 122 (12):2867-2877</em></p>
+    <blockquote>
+      <p>Fast exchange:</p>
+      <blockquote>
+        <p><img src="pics/equations/rex.png" width="177" height="75" /> </p>
+        </blockquote>
+      <p>&nbsp;</p>
+      <p>Slow exchange:</p>
+      <blockquote>
+        <p><img src="pics/equations/rex1.png" width="187" height="66" /> </p>
+      </blockquote>
+    </blockquote>
+    <p>&nbsp;</p>    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" bgcolor="#CCCCCC">(C) Michael Bieri 2010</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
